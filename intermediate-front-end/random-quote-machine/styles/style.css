@@ -1,0 +1,54 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+button {
+  color: #FFFFFF;
+  font-size: 0.7em;
+  text-align: center;
+  border: 0px;
+  border-radius: 2px;
+}
+
+.background-color {
+  background-color: #222222;
+}
+
+.color {
+}
+
+.square {
+  width: 40px;
+  height: 40px;
+}
+
+#main {
+  background-color: #FFFFFF;
+  width: 550px;
+  min-height: 200px;
+  margin: auto;
+  margin-top: 100px;
+  border-radius: 2px;
+  padding: 40px;
+  position: relative;
+  font-size: 1.75em;
+}
+
+#quote {
+  font-weight: 500;
+  text-align: center;
+}
+
+#autor {
+  text-align: right;
+  font-size: 0.55em;
+}
+
+#new-quote {
+  height: 40px;
+  position: absolute;
+  right: 40px;
+  font-size: 0.5em;
+  padding-left: 16px;
+  padding-right: 16px;
+}
