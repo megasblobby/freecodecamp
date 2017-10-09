@@ -6,12 +6,11 @@ let quotes = [];
 $(document).ready(onReady);
 
 function onReady() {
-  $("#new-quote").on("click", onClick);
+  $("#new-quote").on("click", onNewQuote);
   $.getJSON("data/quotes.json", loadQuotes);
 }
 
-
-function onClick() {
+function onNewQuote() {
   changeColor();
   changeQuote();
 }
@@ -31,6 +30,9 @@ function changeQuote() {
   let randomQuote = getRandomQuote();
   $("#quote").html(randomQuote.quote);
   $("#author").html(`- ${randomQuote.author}`);
+  let twitterLink = $("#twitter-link");
+  let href = generateUrl(randomQuote.quote, randomQuote.author);
+  twitterLink.attr("href", href);
 }
 
 function getRandomQuote() {
@@ -38,6 +40,21 @@ function getRandomQuote() {
   return quotes[index];
 }
 
+function generateUrl(quote, author) {
+  let href = "https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw";
+  let hashtags = "&hashtags=quotes";
+  let end = "&tw_p=tweetbutton";
+  let words = quote.split(" ");
+  let space = "%20";
+  href += hashtags + '&text="';
+  for (let word of words) {
+    href += word + " ";
+  }
+  href +='"';
+  href += space + author
+  href += end;
+    return href;
+}
 
 function loadQuotes(data) {
   for (let quote of data.quotes) {
