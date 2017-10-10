@@ -30,9 +30,14 @@ function changeQuote() {
   let randomQuote = getRandomQuote();
   $("#quote").html(randomQuote.quote);
   $("#author").html(`- ${randomQuote.author}`);
+
   let twitterLink = $("#twitter-link");
-  let href = generateUrl(randomQuote.quote, randomQuote.author);
-  twitterLink.attr("href", href);
+  let twitterUrl = generateTwitterUrl(randomQuote.quote, randomQuote.author);
+  twitterLink.attr("href", twitterUrl);
+
+  let tumblrLink = $("#tumblr-link");
+  let tumblrUrl = generateTumblrUrl(randomQuote.quote, randomQuote.author);
+  tumblrLink.attr("href", tumblrUrl);
 }
 
 function getRandomQuote() {
@@ -40,20 +45,43 @@ function getRandomQuote() {
   return quotes[index];
 }
 
-function generateUrl(quote, author) {
+function generateTwitterUrl(quote, author) {
   let href = "https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw";
   let hashtags = "&hashtags=quotes";
-  let end = "&tw_p=tweetbutton";
   let words = quote.split(" ");
   let space = "%20";
   href += hashtags + '&text="';
   for (let word of words) {
-    href += word + " ";
+    href += word + space;
   }
   href +='"';
   href += space + author
+
+  let end = "&tw_p=tweetbutton";
   href += end;
-    return href;
+
+  return href;
+}
+
+function generateTumblrUrl(quote, author) {
+  let href = "https://www.tumblr.com/widgets/share/tool?posttype=quote";
+  let tags = "&tags=quotes";
+  href += tags;
+  let words = quote.split(" ");
+  let space = "%20";
+  let caption = "&caption= " + author;
+  href += caption;
+
+  let content = "&content=";
+  for (let word of words) {
+    content += word + space;
+  }
+  href += content;
+
+  let end = "&canonicalUrl=https%3A%2F%2Fwww.tumblr.com%2Fbuttons&shareSource=tumblr_share_button";
+  href += end;
+
+  return href;
 }
 
 function loadQuotes(data) {
