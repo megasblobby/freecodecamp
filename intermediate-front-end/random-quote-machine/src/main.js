@@ -17,7 +17,8 @@ function onNewQuote() {
 
 function changeColor() {
   let randomColor = getRandomColor();
-  $(".background-color").css("background-color", randomColor);
+  //$(".background-color").css("background-color", randomColor);
+  $(".background-color").animate({backgroundColor : randomColor}, "slow");
   $(".color").css("color", randomColor);
 }
 
