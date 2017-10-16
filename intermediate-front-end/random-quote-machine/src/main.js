@@ -23,7 +23,7 @@ function changeColor() {
   $(".background-color").animate({backgroundColor : randomColor}, "slow");
 
   $("#quote").fadeOut();
-  $(".color").css("color", randomColor);
+  $(".foreground-color").css("color", randomColor);
   $("#quote").fadeIn("slow");
 }
 
@@ -96,19 +96,4 @@ function loadQuotes(data) {
   }
   changeColor();
   changeQuote();
-}
-
-function highlight() {
-  /*let color =  $(".button").css("background-color");
-  let rgbString = color.slice(4, color.length - 1);
-  let firstComma = rgbString.indexOf(",");
-  let secondComma = rgbString.lastIndexOf(",");
-
-  let red = parseInt(rgbString.slice(0, firstComma), 10);
-  let green = parseInt(rgbString.slice(firstComma + 1, secondComma), 10);
-  let blue = parseInt(rgbString.slice(secondComma, rgbString.length), 10);
-  let alpha = 0.5;
-  $(".button").css("background-color", `rgba(${red}, ${green}, ${blue}, ${alpha})`);*/
-
-  $(this).animate({'opacity':'0.7'}, 100);
 }

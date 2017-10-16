@@ -9,7 +9,6 @@ body {
 
 a {
     text-decoration: none;
-    color: #FFFFFF;
 }
 
 a:link {
@@ -24,17 +23,18 @@ a:visited {
   background-color: #222222;
 }
 
-.color {
+.foreground-color {
   color: #222222;
+}
+
+.white {
+  color: #FFFFFF;
 }
 
 .button {
   height: 38px;
-  color: #FFFFFF;
   font-size: 0.7em;
   text-align: center;
-  border: 0px;
-  border-radius: 2px;
 }
 
 .social-button {
@@ -49,13 +49,17 @@ a:visited {
   margin-left: -9px;
 }
 
+.round-borders {
+  border: 0px;
+  border-radius: 3px;
+}
+
 #main {
   background-color: #FFFFFF;
   width: 550px;
   min-height: 120px;
   margin: auto;
   margin-top: 100px;
-  border-radius: 2px;
   padding: 40px;
   position: relative;
   font-size: 1.75em;
@@ -72,10 +76,21 @@ a:visited {
 }
 
 #new-quote {
-  height: 38px;
   position: absolute;
+  height: 38px;
   right: 40px;
   font-size: 0.5em;
   padding-left: 16px;
   padding-right: 16px;
+}
+
+#tumblr-span {
+  width: 15px;
+}
+
+#page-by {
+  margin: auto;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.75em;
 }

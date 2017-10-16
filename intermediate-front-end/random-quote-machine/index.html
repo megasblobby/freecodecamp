@@ -11,29 +11,30 @@
   <script src="src/jquery.color-2.1.2.min.js"></script>
   <script src="src/main.js"></script>
 </head>
-<body class="background-color color">
-  <div id="main">
+<body class="background-color foreground-color">
+  <div id="main" class="round-borders">
     <span id="quote-left" class="fa fa-quote-left"></span>
     <span id="quote"></span>
     <p id="author"></p>
     <span>
-        <span id="share-twitter" class="button social-button background-color">
-          <a id="twitter-link" class="social-link twitter-share-button"
+        <span id="share-twitter" class="button social-button background-color round-borders">
+          <a id="twitter-link" class="social-link twitter-share-button white"
           href="" class="twitter-share-button" data-show-count="false">
             <span class="fa fa-twitter"></span>
           </a>
           <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
         </span>
 
-      <span id="share-tumblr" class="button social-button background-color">
-      <a id ="tumblr-link" class="social-link" href="">
-        <span class="fa fa-tumblr"></span>
+      <span id="share-tumblr" class="button social-button background-color round-borders">
+      <a id ="tumblr-link" class="social-link white" href="">
+        <span id="tumblr-span" class="fa fa-tumblr"></span>
       </a>
       <script id="tumblr-js" async src="https://assets.tumblr.com/share-button.js"></script>
       </span>
 
-      <button id="new-quote" class="button background-color">New quote</button>
+      <button id="new-quote" class="button background-color white round-borders">New quote</button>
     </span>
   </div>
+  <div id="page-by" class="white">by megasblobby<div>
 </body>
 </html>
