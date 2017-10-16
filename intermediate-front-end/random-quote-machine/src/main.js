@@ -7,7 +7,7 @@ $(document).ready(onReady);
 
 function onReady() {
   $("#new-quote").on("click", onNewQuote);
-  $.getJSON("data/quotes.json", loadQuotes);
+  $.getJSON("https://raw.githubusercontent.com/megasblobby/freecodecamp/master/intermediate-front-end/random-quote-machine/data/quotes.json", loadQuotes);
   $(".button").hover(
     function() { $(this).animate({'opacity':'0.7'}, 100); },
     function() { $(this).animate({'opacity':'1'}, 100); } );
