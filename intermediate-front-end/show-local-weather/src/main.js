@@ -6,8 +6,16 @@ const REQUEST_DONE = 4;
 const RESPONSE_READY = 200;
 const REQUEST_METHOD = "GET";
 const FCC_WEATHER_API = "https://fcc-weather-api.glitch.me/api/current?";
+const CELSIUS = 'C';
+const FAHRENHEIT = 'F';
+
+const backgrounds = {cold : '#d1d1e0', medium: '#66ccff', hot: '#ff6600'};
+
 let coords;
-let unitMeasure = 'C';
+let unitMeasure = CELSIUS;
+let celsiusTemperature = 0;
+let fahrenheitTemperature = 0;
+let temperature = 0;
 
 window.onload = function() {
   if ("geolocation" in navigator) {
@@ -20,6 +28,8 @@ window.onload = function() {
     document.getElementById('location').innerHTML =
     "Geolocation is not supported by your browser";
   }
+
+  document.getElementById('unit-measure').onclick = changeUniteMeasure;
 }
 
 function showPosition(position) {
@@ -50,10 +60,13 @@ function displayResponse(response) {
   }
   if ("main" in response) {
     if (document.getElementById('temperature') !== null || document.getElementById('unit-measure') !== null) {
-        let temperature = Number.parseFloat(response.main.temp);
-        document.getElementById('temperature').innerHTML = `${temperature.toFixed(1)}`;
+        celsiusTemperature = Number.parseFloat(response.main.temp);
+        fahrenheitTemperature = getFahrenheitTemperature(celsiusTemperature);
+        temperature = celsiusTemperature;
+        document.getElementById('temperature').innerHTML = temperature.toFixed(1);
         document.getElementById('degree').innerHTML = "°";
-        document.getElementById('unit-measure').innerHTML = `${unitMeasure}`;
+        document.getElementById('unit-measure').innerHTML = unitMeasure;
+        setBackground(celsiusTemperature);
     }
     else {
       console.log(`Element 'temperature' is null!`);
@@ -113,4 +126,34 @@ function validate(coords) {
   }
 
   return coords;
+}
+
+function getFahrenheitTemperature(celsius) {
+  return  Number.parseFloat(celsius * 9.5 + 32);
+}
+
+function changeUniteMeasure() {
+  if (unitMeasure === CELSIUS) {
+    unitMeasure = FAHRENHEIT;
+    temperature = fahrenheitTemperature;
+  }
+  else if (unitMeasure === FAHRENHEIT) {
+    unitMeasure = CELSIUS;
+    temperature = celsiusTemperature;
+  }
+
+  document.getElementById('temperature').innerHTML = temperature.toFixed(1);
+  document.getElementById('unit-measure').innerHTML = unitMeasure;
+}
+
+function setBackground(celsiusTemperature) {
+  if (celsiusTemperature < 10) {
+      document.body.style.backgroundColor = backgrounds['cold'];
+  }
+  else if (celsiusTemperature >= 10 && celsiusTemperature <= 21){
+    document.body.style.backgroundColor = backgrounds['medium'];
+  }
+  else {
+    document.body.style.backgroundColor = backgrounds['hot'];
+  }
 }
