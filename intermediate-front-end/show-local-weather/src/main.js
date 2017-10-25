@@ -9,7 +9,7 @@ const FCC_WEATHER_API = "https://fcc-weather-api.glitch.me/api/current?";
 const CELSIUS = 'C';
 const FAHRENHEIT = 'F';
 
-const backgrounds = {cold : '#d1d1e0', medium: '#66ccff', hot: '#ff6600'};
+const backgrounds = {cold : '#646464', temperate: '#0fa0c8', hot: '#dc6600'};
 
 let coords;
 let unitMeasure = CELSIUS;
@@ -147,13 +147,14 @@ function changeUniteMeasure() {
 }
 
 function setBackground(celsiusTemperature) {
+  let backgroundColor = document.body.style.backgroundColor;
   if (celsiusTemperature < 10) {
-      document.body.style.backgroundColor = backgrounds['cold'];
+    $("body").animate({backgroundColor : backgrounds['cold']}, "slow");
   }
   else if (celsiusTemperature >= 10 && celsiusTemperature <= 21){
-    document.body.style.backgroundColor = backgrounds['medium'];
+    $("body").animate({backgroundColor : backgrounds['temperate']}, "slow");
   }
   else {
-    document.body.style.backgroundColor = backgrounds['hot'];
+    $("body").animate({backgroundColor : backgrounds['hot']}, "medium");
   }
 }

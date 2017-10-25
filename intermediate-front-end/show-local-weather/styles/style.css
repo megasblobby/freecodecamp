@@ -9,6 +9,12 @@ body {
 h1, h2 {
   font-size: 3em;
   font-weight: 500;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+#result {
+  margin-top: 50px;
 }
 
 #wheater-graphical-description {
@@ -18,11 +24,11 @@ h1, h2 {
 }
 
 #degree {
-  margin-left: 10px;
+  margin-left: -5px;
 }
 
 #unit-measure {
-  color: #006dcc;
+  color: #0004ec;
 }
 
 #unit-measure:hover {
