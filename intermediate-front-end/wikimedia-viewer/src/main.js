@@ -34,18 +34,23 @@ function displayResponse(response) {
   let answers = document.getElementById('answers');
   for (let item of items) {
     let answer = document.createElement('div');
+    let answerClass = document.createAttribute('class');
+    answerClass.value = 'answer';
+    answer.setAttributeNode(answerClass);
 
     let title = document.createElement('h1');
     title.innerHTML = item.getElementsByTagName('Text')[0].innerHTML;
-    
+
     let description = document.createElement('p');
     description.innerHTML = item.getElementsByTagName('Description')[0].innerHTML;
 
     let url = item.getElementsByTagName('Url')[0].innerHTML;
     let link = document.createElement('a');
     link.href = url;
-    link.appendChild(title);
-    link.appendChild(description);
+
+    answer.appendChild(title);
+    answer.appendChild(description);
+    link.appendChild(answer);
 
     answers.appendChild(link);
   }
