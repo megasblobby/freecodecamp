@@ -4,6 +4,8 @@ const RESPONSE_READY = 200;
 
 window.onload = function() {
   makeRequest().then(response => displayResponse(response));
+  document.getElementById('magnifying-glass').onclick = animate;
+  //animate();
 }
 
 function makeRequest() {
@@ -34,9 +36,7 @@ function displayResponse(response) {
   let answers = document.getElementById('answers');
   for (let item of items) {
     let answer = document.createElement('div');
-    let answerClass = document.createAttribute('class');
-    answerClass.value = 'answer';
-    answer.setAttributeNode(answerClass);
+    answer.setAttribute('class', 'answer');
 
     let title = document.createElement('h1');
     title.innerHTML = item.getElementsByTagName('Text')[0].innerHTML;
@@ -56,4 +56,33 @@ function displayResponse(response) {
   }
 
   console.log(items);
+}
+
+function animate() {
+  let magnifyingGlass = document.getElementById('magnifying-glass');
+  let handle = document.getElementById('handle');
+
+  let magnifyingGlassKeyFrames = new KeyframeEffect(
+    magnifyingGlass, [
+      { width: '30px'},
+      { width: '230px'}
+      ],
+      {duration: 500, fill: 'forwards' })
+  let disappearHandleKeyFrames = new KeyframeEffect(
+    handle, [
+    { height: '15px', left: '0px' },
+    { height: '0px', left: '-2px' }
+    ],
+    {duration: 200, fill: 'forwards' });
+
+  let magnifyingGlassAnimation = new Animation(magnifyingGlassKeyFrames,
+      document.timeline);
+  let disappearAnimation = new Animation(disappearHandleKeyFrames,
+    document.timeline);
+
+
+    disappearAnimation.onfinish = function() {
+      magnifyingGlassAnimation.play();
+    };
+    disappearAnimation.play();
 }
