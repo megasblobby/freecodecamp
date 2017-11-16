@@ -2,10 +2,11 @@
 const REQUEST_DONE = 4;
 const RESPONSE_READY = 200;
 
+let isMagnifyingGlassEnlarged = false;
+
 window.onload = function() {
   makeRequest().then(response => displayResponse(response));
-  document.getElementById('magnifying-glass').onclick = animate;
-  //animate();
+  document.getElementById('magnifying-glass').onclick = enlargeMagnifyingGlass;
 }
 
 function makeRequest() {
@@ -58,21 +59,19 @@ function displayResponse(response) {
   console.log(items);
 }
 
-function animate() {
+function enlargeMagnifyingGlass() {
   let magnifyingGlass = document.getElementById('magnifying-glass');
   let handle = document.getElementById('handle');
 
   let magnifyingGlassKeyFrames = new KeyframeEffect(
     magnifyingGlass, [
       { width: '30px'},
-      { width: '230px'}
-      ],
+      { width: '230px'}],
       {duration: 500, fill: 'forwards' })
   let disappearHandleKeyFrames = new KeyframeEffect(
     handle, [
     { height: '15px', left: '0px' },
-    { height: '0px', left: '-2px' }
-    ],
+    { height: '0px', left: '-2px' }],
     {duration: 200, fill: 'forwards' });
 
   let magnifyingGlassAnimation = new Animation(magnifyingGlassKeyFrames,
@@ -80,9 +79,38 @@ function animate() {
   let disappearAnimation = new Animation(disappearHandleKeyFrames,
     document.timeline);
 
+    magnifyingGlassAnimation.onfinish = appearCross;
 
     disappearAnimation.onfinish = function() {
       magnifyingGlassAnimation.play();
+      isMagnifyingGlassEnlarged = true;
     };
-    disappearAnimation.play();
+
+    if (isMagnifyingGlassEnlarged === false) {
+      disappearAnimation.play();
+    }
+}
+
+function appearCross() {
+  let crossLeftToRight = document.getElementById('cross-left-to-right');
+  let crossRightToLeft = document.getElementById('cross-right-to-left');
+
+  let appearCrossLeftToRightKeyFrames = new KeyframeEffect(
+    crossLeftToRight, [
+    {height: '0px', top: '20px', right: '-240px'},
+    {height: '15px', top: '15px', right: '-230px'}],
+    {duration: 300, fill: 'forwards' });
+  let appearCrossRightToLeftKeyFrames = new KeyframeEffect(
+    crossRightToLeft, [
+    {height: '0px', top: '-5px', right: '-235px'},
+    {height: '15px', top: '15px', right: '-223px'}],
+    {duration: 300, fill: 'forwards' });
+
+  let appearCrossLeftToRightAnimation = new Animation(
+    appearCrossLeftToRightKeyFrames, document.timeline);
+  let appearCrossRightToLeftAnimation = new Animation(
+    appearCrossRightToLeftKeyFrames, document.timeline);
+
+  appearCrossLeftToRightAnimation.play();
+  appearCrossRightToLeftAnimation.play();
 }
