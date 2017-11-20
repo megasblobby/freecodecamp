@@ -2,11 +2,14 @@
 const REQUEST_DONE = 4;
 const RESPONSE_READY = 200;
 
-let isMagnifyingGlassEnlarged = false;
+let isSearchBarExpandend = false;
 
 window.onload = function() {
   makeRequest().then(response => displayResponse(response));
-  document.getElementById('magnifying-glass').onclick = enlargeMagnifyingGlass;
+
+  document.getElementById('magnifying-glass').onclick = animateSearchBar;
+  /*document.getElementById('cross-right-to-left').onclick = collapseSearchBar;
+  document.getElementById('cross-left-to-right').onclick = collapseSearchBar;*/
 }
 
 function makeRequest() {
@@ -83,10 +86,10 @@ function enlargeMagnifyingGlass() {
 
     disappearAnimation.onfinish = function() {
       magnifyingGlassAnimation.play();
-      isMagnifyingGlassEnlarged = true;
+      isMagnifyingGlassExpanded = true;
     };
 
-    if (isMagnifyingGlassEnlarged === false) {
+    if (isSearchBarExpandend === false) {
       disappearAnimation.play();
     }
 }
@@ -113,4 +116,56 @@ function appearCross() {
 
   appearCrossLeftToRightAnimation.play();
   appearCrossRightToLeftAnimation.play();
+}
+
+function animateSearchBar() {
+  let magnifyingGlass = document.getElementById('magnifying-glass');
+  let handle = document.getElementById('handle');
+  let crossLeftToRight = document.getElementById('cross-left-to-right');
+  let crossRightToLeft = document.getElementById('cross-right-to-left');
+
+  if(isSearchBarExpandend === false) {
+    handle.animate([
+      { height: '15px', left: '0px' },
+      { height: '0px', left: '-2px' }],
+      { duration: 200, fill: 'both' }).onfinish = () => {
+
+    magnifyingGlass.animate([
+      { width: '20px'},
+      { width: '230px'}],
+      { duration: 500, fill: 'both' }).onfinish = () => {
+    crossLeftToRight.animate([
+      { height: '0px', top: '20px', right: '-240px'},
+      { height: '15px', top: '15px', right: '-230px'}],
+      { duration: 300, fill: 'both' });
+    crossRightToLeft.animate([
+      { height: '0px', top: '-5px', right: '-235px'},
+      { height: '15px', top: '15px', right: '-223px'}],
+      { duration: 300, fill: 'both' });
+      }
+    }
+    isSearchBarExpandend = true;
+  }
+  else {
+    crossLeftToRight.animate([
+      { height: '15px', top: '15px', right: '-230px'},
+      { height: '0px', top: '20px', right: '-240px'}],
+      { duration: 300, fill: 'both' });
+    crossRightToLeft.animate([
+      { height: '15px', top: '15px', right: '-223px'},
+      { height: '0px', top: '-5px', right: '-235px'}],
+      { duration: 300, fill: 'both' }).onfinish = () => {
+      magnifyingGlass.animate([
+        { width: '230px'},
+        { width: '20px'}],
+        { duration: 500, fill: 'both' }).onfinish = () => {
+
+          handle.animate([
+            { height: '0px', left: '-2px' },
+            { height: '15px', left: '-0px' }],
+            { duration: 200, fill: 'both' });
+          }
+          isSearchBarExpandend = false;
+    }
+  }
 }
