@@ -44,11 +44,11 @@ p {
 .cross {
   width: 1.5px;
   height: 0px;
-  top: 15px;
   background-color: #D96F32;
   display: inline-block;
-  position: relative;
-  z-index: 100;
+  position: absolute;
+  left: 20px;
+  z-index: 90;
 }
 
 #random {
@@ -77,31 +77,34 @@ p {
   margin: auto;
   cursor: pointer;
   font-size: 14px;
-
-  /*animation-name: blink;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;*/
 }
 
 #magnifying-glass:focus {
   outline: 0;
 }
 
-#cross-left-to-right {
-  right: -230px;
-  transform: rotate(-45deg);
+#collapse {
+  position: relative;
+  background-color: #00000000;
+  min-width: 20px;
+  min-height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+  top: 15px;
+  left: 210px;
+  z-index: 200;
+}
 
-  /*animation-name: appear-cross-left-to-right;
-  animation-duration: 0.6s;*/
+#collapse:hover {
+  cursor: pointer;
+}
+
+#cross-left-to-right {
+  transform: rotate(-45deg);
 }
 
 #cross-right-to-left {
-  right: -223px;
   transform: rotate(45deg);
-
-  /*animation-name: appear-cross-right-to-left;
-  animation-duration: 0.6s;*/
-  /*animation-iteration-count: forward;*/
 }
 
 #handle {

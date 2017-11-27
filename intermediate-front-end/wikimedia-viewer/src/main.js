@@ -3,13 +3,15 @@ const REQUEST_DONE = 4;
 const RESPONSE_READY = 200;
 
 let isSearchBarExpandend = false;
+let isPlaying = false;
 
 window.onload = function() {
   makeRequest().then(response => displayResponse(response));
 
   document.getElementById('magnifying-glass').onclick = animateSearchBar;
-  /*document.getElementById('cross-right-to-left').onclick = collapseSearchBar;
-  document.getElementById('cross-left-to-right').onclick = collapseSearchBar;*/
+  document.getElementById('cross-left-to-right').onclick = animateSearchBar;
+  document.getElementById('cross-right-to-left').onclick = animateSearchBar;
+  document.getElementById('collapse').style.visibility = 'hidden';
 }
 
 function makeRequest() {
@@ -62,110 +64,65 @@ function displayResponse(response) {
   console.log(items);
 }
 
-function enlargeMagnifyingGlass() {
-  let magnifyingGlass = document.getElementById('magnifying-glass');
-  let handle = document.getElementById('handle');
-
-  let magnifyingGlassKeyFrames = new KeyframeEffect(
-    magnifyingGlass, [
-      { width: '30px'},
-      { width: '230px'}],
-      {duration: 500, fill: 'forwards' })
-  let disappearHandleKeyFrames = new KeyframeEffect(
-    handle, [
-    { height: '15px', left: '0px' },
-    { height: '0px', left: '-2px' }],
-    {duration: 200, fill: 'forwards' });
-
-  let magnifyingGlassAnimation = new Animation(magnifyingGlassKeyFrames,
-      document.timeline);
-  let disappearAnimation = new Animation(disappearHandleKeyFrames,
-    document.timeline);
-
-    magnifyingGlassAnimation.onfinish = appearCross;
-
-    disappearAnimation.onfinish = function() {
-      magnifyingGlassAnimation.play();
-      isMagnifyingGlassExpanded = true;
-    };
-
-    if (isSearchBarExpandend === false) {
-      disappearAnimation.play();
-    }
-}
-
-function appearCross() {
-  let crossLeftToRight = document.getElementById('cross-left-to-right');
-  let crossRightToLeft = document.getElementById('cross-right-to-left');
-
-  let appearCrossLeftToRightKeyFrames = new KeyframeEffect(
-    crossLeftToRight, [
-    {height: '0px', top: '20px', right: '-240px'},
-    {height: '15px', top: '15px', right: '-230px'}],
-    {duration: 300, fill: 'forwards' });
-  let appearCrossRightToLeftKeyFrames = new KeyframeEffect(
-    crossRightToLeft, [
-    {height: '0px', top: '-5px', right: '-235px'},
-    {height: '15px', top: '15px', right: '-223px'}],
-    {duration: 300, fill: 'forwards' });
-
-  let appearCrossLeftToRightAnimation = new Animation(
-    appearCrossLeftToRightKeyFrames, document.timeline);
-  let appearCrossRightToLeftAnimation = new Animation(
-    appearCrossRightToLeftKeyFrames, document.timeline);
-
-  appearCrossLeftToRightAnimation.play();
-  appearCrossRightToLeftAnimation.play();
-}
-
-function animateSearchBar() {
+function animateSearchBar(event) {
+  if (isPlaying) {
+    return;
+  }
   let magnifyingGlass = document.getElementById('magnifying-glass');
   let handle = document.getElementById('handle');
   let crossLeftToRight = document.getElementById('cross-left-to-right');
   let crossRightToLeft = document.getElementById('cross-right-to-left');
 
-  if(isSearchBarExpandend === false) {
+  if(isSearchBarExpandend === false && event.target.id === 'magnifying-glass') {
+    isPlaying = true;
     handle.animate([
       { height: '15px', left: '0px' },
       { height: '0px', left: '-2px' }],
       { duration: 200, fill: 'both' }).onfinish = () => {
-
     magnifyingGlass.animate([
       { width: '20px'},
       { width: '230px'}],
       { duration: 500, fill: 'both' }).onfinish = () => {
+    document.getElementById('collapse').style.visibility = 'visible';
     crossLeftToRight.animate([
-      { height: '0px', top: '20px', right: '-240px'},
-      { height: '15px', top: '15px', right: '-230px'}],
+      { height: '0px', top: '20px', left: '20px'},
+      { height: '15px', top: '2px', left: '10px'}],
       { duration: 300, fill: 'both' });
     crossRightToLeft.animate([
-      { height: '0px', top: '-5px', right: '-235px'},
-      { height: '15px', top: '15px', right: '-223px'}],
-      { duration: 300, fill: 'both' });
+      { height: '0px', top: '0px', left: '20px'},
+      { height: '15px', top: '2px', left: '10px'}],
+      { duration: 300, fill: 'both' }).onfinish = () => {
+        isSearchBarExpandend = true;
+        isPlaying = false;
+      };
       }
     }
-    isSearchBarExpandend = true;
   }
-  else {
+  else if (isSearchBarExpandend === true &&
+           event.target.id === 'cross-left-to-right' ||
+           event.target.id === 'cross-right-to-left'){
+    isPlaying = true;
     crossLeftToRight.animate([
-      { height: '15px', top: '15px', right: '-230px'},
-      { height: '0px', top: '20px', right: '-240px'}],
+      { height: '15px', top: '2px', left: '10px'},
+      { height: '0px', top: '20px', left: '20px'}],
       { duration: 300, fill: 'both' });
     crossRightToLeft.animate([
-      { height: '15px', top: '15px', right: '-223px'},
-      { height: '0px', top: '-5px', right: '-235px'}],
+      { height: '15px', top: '2px', left: '10px'},
+      { height: '0px', top: '0px', left: '20px'}],
       { duration: 300, fill: 'both' }).onfinish = () => {
-      magnifyingGlass.animate([
-        { width: '230px'},
-        { width: '20px'}],
-        { duration: 500, fill: 'both' }).onfinish = () => {
-
-          handle.animate([
-            { height: '0px', left: '-2px' },
-            { height: '15px', left: '-0px' }],
-            { duration: 200, fill: 'both' });
-          }
-          isSearchBarExpandend = false;
-    }
-  }
+    document.getElementById('collapse').style.visibility = 'hidden';
+    magnifyingGlass.animate([
+      { width: '230px'},
+      { width: '20px'}],
+      { duration: 500, fill: 'both' }).onfinish = () => {
+    handle.animate([
+       { height: '0px', left: '-2px' },
+       { height: '15px', left: '-0px' }],
+       { duration: 200, fill: 'both' }).onfinish = () => {
+         isSearchBarExpandend = false;
+         isPlaying = false;
+       };
+       }
+     }
+   }
 }
