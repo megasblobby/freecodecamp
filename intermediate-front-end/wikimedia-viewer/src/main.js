@@ -1,29 +1,41 @@
-/*https://en.wikipedia.org/w/api.php?action=opensearch&format=xmlfm&search=api&namespace=0&limit=10*/
 const REQUEST_DONE = 4;
 const RESPONSE_READY = 200;
+
+const BASE_URL = 'https://en.wikipedia.org/w/api.php?'
+const ACTION = 'action=opensearch';
+const ORIGIN = '&origin=*';
+const FORMAT = '&format=xml'
+const SEARCH = '&search=';
+const NAMESPACE = '&namespace=0';
+const LIMIT = '&limit=10';
 
 let isSearchBarExpandend = false;
 let isPlaying = false;
 
 window.onload = function() {
-  makeRequest().then(response => displayResponse(response));
-
   document.getElementById('magnifying-glass').onclick = animateSearchBar;
-  document.getElementById('cross-left-to-right').onclick = animateSearchBar;
-  document.getElementById('cross-right-to-left').onclick = animateSearchBar;
+  document.getElementById('magnifying-glass').onkeydown = search;
+
+  document.getElementById('collapse').onclick = animateSearchBar;
   document.getElementById('collapse').style.visibility = 'hidden';
 }
 
-function makeRequest() {
+function search(event) {
+  if (event.key === 'Enter') {
+    let stringToSearch = this.value;
+    makeRequest(stringToSearch).then(response => displayResponse(response));
+  }
+}
+
+function makeRequest(stringToSearch) {
   return new Promise((resolve, reject) => {
     let request = new XMLHttpRequest();
     request.responeType = "document";
     request.overrideMimeType('text/xml');
 
     let url =
-     `https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&format=xml&search=cobra&namespace=0&limit=10`;
+     `${BASE_URL}${ACTION}${ORIGIN}${FORMAT}${SEARCH}${stringToSearch}${NAMESPACE}${LIMIT}`
     request.open('GET', url, true);
-    //request.setRequestHeader("Origin", "https://www.yourpage.com");
     request.onload = () => {
           if (request.readyState === REQUEST_DONE && request.status === RESPONSE_READY) {
               resolve(request.responseXML);
@@ -37,7 +49,6 @@ function makeRequest() {
 }
 
 function displayResponse(response) {
-  console.log(response);
   let items = response.getElementsByTagName('Item');
   let answers = document.getElementById('answers');
   for (let item of items) {
@@ -60,8 +71,15 @@ function displayResponse(response) {
 
     answers.appendChild(link);
   }
+}
 
-  console.log(items);
+function clear() {
+  document.getElementById('magnifying-glass').value = "";
+  let answers = document.getElementById('answers');
+  let children = answers.childNodes;
+  while(children.length > 0) {
+    answers.removeChild(children[0]);
+  }
 }
 
 function animateSearchBar(event) {
@@ -98,9 +116,8 @@ function animateSearchBar(event) {
       }
     }
   }
-  else if (isSearchBarExpandend === true &&
-           event.target.id === 'cross-left-to-right' ||
-           event.target.id === 'cross-right-to-left'){
+  else if (isSearchBarExpandend === true && event.target.id === 'collapse'){
+    clear();
     isPlaying = true;
     crossLeftToRight.animate([
       { height: '15px', top: '2px', left: '10px'},
