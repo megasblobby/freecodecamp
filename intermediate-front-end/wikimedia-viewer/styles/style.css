@@ -51,8 +51,17 @@ p {
   z-index: 90;
 }
 
+#search {
+  margin-top: 40%;
+}
+
 #random {
   max-width: 215px;
+  display: block;
+}
+
+#random:hover {
+  cursor: pointer;
 }
 
 #magnifying-glass-container {

@@ -18,6 +18,8 @@ window.onload = function() {
 
   document.getElementById('collapse').onclick = animateSearchBar;
   document.getElementById('collapse').style.visibility = 'hidden';
+
+  document.getElementById('random').onclick = getRandomArticle;
 }
 
 function search(event) {
@@ -49,6 +51,8 @@ function makeRequest(stringToSearch) {
 }
 
 function displayResponse(response) {
+  clear();
+  document.getElementById('search').style.marginTop = 'auto';
   let items = response.getElementsByTagName('Item');
   let answers = document.getElementById('answers');
   for (let item of items) {
@@ -118,6 +122,7 @@ function animateSearchBar(event) {
   }
   else if (isSearchBarExpandend === true && event.target.id === 'collapse'){
     clear();
+    document.getElementById('search').style.marginTop = '40%';
     isPlaying = true;
     crossLeftToRight.animate([
       { height: '15px', top: '2px', left: '10px'},
@@ -142,4 +147,8 @@ function animateSearchBar(event) {
        }
      }
    }
+}
+
+function getRandomArticle() {
+
 }
