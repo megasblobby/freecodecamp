@@ -74,6 +74,11 @@ function displayResponse(response) {
     link.appendChild(answer);
 
     answers.appendChild(link);
+
+    document.getElementById('answers').animate([
+    {top: '550px', opacity: '0'},
+    { top: '0px', opacity: '1'}],
+    { duration: 500, fill: 'forwards' }).onfinish = () => {console.log('cobra');};
   }
 }
 
@@ -116,13 +121,15 @@ function animateSearchBar(event) {
       { duration: 300, fill: 'both' }).onfinish = () => {
         isSearchBarExpandend = true;
         isPlaying = false;
+
+
       };
       }
     }
   }
   else if (isSearchBarExpandend === true && event.target.id === 'collapse'){
     clear();
-    document.getElementById('search').style.marginTop = '40%';
+    document.getElementById('search').style.marginTop = '20%';
     isPlaying = true;
     crossLeftToRight.animate([
       { height: '15px', top: '2px', left: '10px'},
@@ -147,8 +154,4 @@ function animateSearchBar(event) {
        }
      }
    }
-}
-
-function getRandomArticle() {
-
 }

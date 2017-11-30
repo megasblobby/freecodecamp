@@ -52,11 +52,12 @@ p {
 }
 
 #search {
-  margin-top: 40%;
+  margin-top: 20%;
 }
 
 #random {
-  max-width: 215px;
+  min-width: 245px;
+  max-width: 245px;
   display: block;
 }
 
@@ -127,27 +128,10 @@ p {
 }
 
 #instructions {
-  max-width: 140px;
+  min-width: 160px;
+  max-width: 160px;
 }
 
-@keyframes enlarge {
-  0%   {width: 30px;}
-  100% {width: 230px;}
-}
-
-@keyframes disappear {
-  0%   {height: 15px;}
-  100% {height: 0px;}
-  0%   {left: 0px;}
-  100% {left: -2px;}
-}
-
-@keyframes appear-cross-right-to-left {
-  0%   {height: 0px; top: -5px; right: -235px;}
-  100% {height: 15px; top: 15px; right: -223px;}
-}
-
-@keyframes appear-cross-left-to-right {
-  0%   {height: 0px; top: 20px; right: -240px;}
-  100% {height: 15px; top: 15px; right: -230px;}
+#answers {
+  position: relative;
 }
