@@ -1,8 +1,38 @@
 <!DOCTYPE = html>
 <html>
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <title>Twitch Streamers</title>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type">
+    <meta content="utf-8" http-equiv="encoding">
 
+    <link rel="stylesheet" href="styles/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src='src/main.js'></script>
   </head>
+
+  <body>
+    <div id='streams'>
+      <div id='header'>
+        <div id='title' class='inline-block'><h1>Twitch Streamers</h1></div>
+        <div id='categories' class='inline-block'>
+          <div id='all-category' class='category'>
+            <div class='inline-block circle'></div>
+            <div class='inline-block category-name'>all</div>
+          </div>
+          <div id='online-category' class='category'>
+            <div class='inline-block circle'></div>
+            <div class='inline-block category-name'>online</div>
+          </div>
+          <div id='offline-category' class='category'>
+            <div class='inline-block circle'></div>
+            <div class='inline-block category-name'>offline</div>
+          </div>
+        </div>
+      </div>
+      <div id='online'></div>
+      <div id='offline'></div>
+      <div id='margin-bottom'></div>
+    </div>
+  </body>
 </html>
