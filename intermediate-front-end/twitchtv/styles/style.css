@@ -26,13 +26,23 @@ a {
   font-size: 0.7em;
   background-color: #E1E1E6;
   color: #5C5457;
+  position: relative;
   margin-top: 3px;
   height: 18px;
   width: 18px;
-  position: relative;
-  left:54px;
+  left: 54px;
+  transition: all 0.5s ease;
 }
 
+.category:hover {
+  width: 72px;
+  left: 0px;
+}
+
+.category-expanded {
+  width: 72px;
+  left: 0px;
+}
 
 .circle {
   width: 9px;
@@ -132,4 +142,9 @@ a {
 
 #margin-bottom {
   min-height: 10px;
+}
+
+.expand {
+  width: '72px';
+  left: '0px';
 }

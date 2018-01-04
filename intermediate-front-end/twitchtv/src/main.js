@@ -21,8 +21,12 @@ window.onload = () => {
   let elements = document.getElementsByClassName('category');
   for (var index = 0; index < elements.length; index++) {
     elements[index].onclick = setFlags;
+    //elements[index].onmouseover = animateCategories;
+    //elements[index].onmouseout = animateCategories;
     categories[`${elements[index].id}`] = false;
   }
+
+  categories[`all-category`] = true;
 
   getUsersInfo(usersLogin).then(response => {
     let usersData = JSON.parse(response);
@@ -51,43 +55,52 @@ window.onload = () => {
 }
 
 function setFlags(event) {
-  let target = document.getElementById(event.target.id);
-  if (event.target.id === NO_ID) {
-    target = event.target.parentElement;
-  }
+  let target = getTarget(event.target);
 
-  if (event.target.id === 'all-category') {
-    target.onlineAreVisible = true;
-    target.offlineAreVisible = true;
+  if (target.id === 'all-category') {
+    flags.onlineAreVisible = true;
+    flags.offlineAreVisible = true;
   }
-  if (event.target.id === 'online-category') {
-    target.onlineAreVisible = true;
-    target.offlineAreVisible = false;
+  if (target.id === 'online-category') {
+    flags.onlineAreVisible = true;
+    flags.offlineAreVisible = false;
   }
-  if (event.target.id === 'offline-category') {
-    target.onlineAreVisible = false;
-    target.offlineAreVisible = true;
+  if (target.id === 'offline-category') {
+    flags.onlineAreVisible = false;
+    flags.offlineAreVisible = true;
   }
 
   displayResults(users, streams, flags);
+}
+
+function getTarget(eventTarget) {
+  let target = document.getElementById(eventTarget.id);
+  if (eventTarget.id === NO_ID) {
+    target = eventTarget.parentElement;
+  }
+
+  return target;
+}
+
+function animateCategories(event) {
+  let target = getTarget(event.target);
 
   if (categories[target.id] === false) {
     target.animate([
       { width: '18px', left: '54px'},
-      { width: '70px', left: '0px'}],
+      { width: '72px', left: '0px'}],
       { duration: 200, fill: 'both' }).onfinish = () => {
           categories[target.id] = !categories[target.id];
       };
   }
   else {
     target.animate([
-      { width: '70px', left: '0px'},
+      { width: '72px', left: '0px'},
       { width: '18px', left: '54px'}],
       { duration: 200, fill: 'both' }).onfinish = () => {
-          categories[target.id] != categories[target.id];
+          categories[target.id] = !categories[target.id];
       };
   }
-
 }
 
 function getUsersInfo(usersLogin) {
