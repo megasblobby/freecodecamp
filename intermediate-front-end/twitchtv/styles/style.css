@@ -63,7 +63,18 @@ a {
   position: absolute;
   margin-top: 3px;
   right: 3px;
+  opacity: 0;
+  transition: all 0.1s;
 }
+
+.category-expanded > .category-name {
+  opacity: 1;
+}
+
+.category:hover > .category-name {
+  opacity: 1;
+}
+
 
 .container {
   border-style: solid;
@@ -142,9 +153,4 @@ a {
 
 #margin-bottom {
   min-height: 10px;
-}
-
-.expand {
-  width: '72px';
-  left: '0px';
 }

@@ -7,6 +7,7 @@ const BASE_URL = 'https://api.twitch.tv/helix/';
 const USERS = 'users?';
 const STREAMS = 'streams?';
 const OFFLINE = 'offline';
+const EXPANDED = 'category-expanded';
 const NO_ID = '';
 
 let usersLogin = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp",
@@ -20,9 +21,11 @@ let categories = {};
 window.onload = () => {
   let elements = document.getElementsByClassName('category');
   for (var index = 0; index < elements.length; index++) {
-    elements[index].onclick = setFlags;
-    //elements[index].onmouseover = animateCategories;
-    //elements[index].onmouseout = animateCategories;
+    elements[index].onclick = (event) => {
+      setFlags(event);
+      setCategoriesSizes(event)
+      displayResults(users, streams, flags);
+    };
     categories[`${elements[index].id}`] = false;
   }
 
@@ -69,8 +72,24 @@ function setFlags(event) {
     flags.onlineAreVisible = false;
     flags.offlineAreVisible = true;
   }
+}
 
-  displayResults(users, streams, flags);
+function setCategoriesSizes(event) {
+  let target = getTarget(event.target);
+
+  let categories = document.getElementsByClassName('category');
+  for (let category of categories) {
+    if (category.id === target.id) {
+      if(!category.classList.contains(EXPANDED)) {
+        category.classList.add(EXPANDED);
+      }
+    }
+    else {
+      if(category.classList.contains(EXPANDED)) {
+        category.classList.remove(EXPANDED);
+      }
+    }
+  }
 }
 
 function getTarget(eventTarget) {
@@ -82,26 +101,6 @@ function getTarget(eventTarget) {
   return target;
 }
 
-function animateCategories(event) {
-  let target = getTarget(event.target);
-
-  if (categories[target.id] === false) {
-    target.animate([
-      { width: '18px', left: '54px'},
-      { width: '72px', left: '0px'}],
-      { duration: 200, fill: 'both' }).onfinish = () => {
-          categories[target.id] = !categories[target.id];
-      };
-  }
-  else {
-    target.animate([
-      { width: '72px', left: '0px'},
-      { width: '18px', left: '54px'}],
-      { duration: 200, fill: 'both' }).onfinish = () => {
-          categories[target.id] = !categories[target.id];
-      };
-  }
-}
 
 function getUsersInfo(usersLogin) {
   let url =`${BASE_URL}${USERS}login=${usersLogin.shift()}`;
