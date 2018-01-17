@@ -1,17 +1,29 @@
 /* {
   border: solid 1px;
 }*/
+@import url("http://db.onlinewebfonts.com/c/d40bbce8f4b00a569beac2454b69231e?family=Oswald");
+
+@font-face {
+  font-family: "Oswald";
+  src: url("http://db.onlinewebfonts.com/t/d40bbce8f4b00a569beac2454b69231e.woff2") format("woff2")
+}
+
+@font-face {font-family: "Droid Serif";
+    src: url("http://db.onlinewebfonts.com/t/df20289f30fbc45183808a4fba6128e3.woff2") format("woff2"),
+}
+
 
 body {
+  font-family: "Droid Serif";
   background-color: #ECF0E7;
-  font-size: 1em;
+  font-size: 0.85em;
 }
 
 h1 {
-  text-transform: uppercase;
   font-family: 'Oswald', sans-serif;
   font-size: 3em;
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 a {
@@ -57,9 +69,10 @@ a {
 }
 
 .category-name {
+  font-family: 'Oswald', sans-serif;;
+  font-weight: bold;
   text-transform: uppercase;
   text-align: right;
-  font-weight: bold;
   position: absolute;
   margin-top: 3px;
   right: 3px;
@@ -75,7 +88,6 @@ a {
   opacity: 1;
 }
 
-
 .container {
   border-style: solid;
   border-color: #ECF0E7;
@@ -84,6 +96,17 @@ a {
   padding-left: 20px;
   padding-right: 20px;
   margin: 0px;
+  position: relative;
+}
+
+.item-container {
+  position: absolute;
+}
+
+.text-container {
+  height: 20px;
+  top: 25px;
+  text-align: center;
 }
 
 .profile-image {
@@ -95,6 +118,25 @@ a {
   max-height: 45px;
   margin-top: 4px;
   left: 0px;
+}
+
+.link-container {
+  width: 150px;
+}
+
+.title-container {
+  width: 500px;
+  left: 150px;
+}
+
+.stream-title {
+  display: inline-block;
+  max-width: 400px;
+  max-height: 20px;
+  font-style: italic;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 #streams {

@@ -2,7 +2,7 @@
 
 const REQUEST_DONE = 4;
 const RESPONSE_READY = 200;
-const CLIENT_ID = 'q83ev6ap7bo9pea30lg0gdkhem0ekt';
+const CLIENT_ID = ''; // PUT HERE YOUR TWITCH KEY
 const BASE_URL = 'https://api.twitch.tv/helix/';
 const USERS = 'users?';
 const STREAMS = 'streams?';
@@ -10,8 +10,8 @@ const OFFLINE = 'offline';
 const EXPANDED = 'category-expanded';
 const NO_ID = '';
 
-let usersLogin = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp",
-                    "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+let usersLogin = ["esl_sc2", "ogamingSC2", "cretetion", "freecodecamp",
+                    "storbeck", "habathcx", "robotcaleb", "noobs2ninjas"];
 
 let users = new Map();
 let streams = new Map();
@@ -151,7 +151,6 @@ function displayResults(users, streams, flags) {
     let user = users.get(id);
     let stream = streams.get(id);
 
-    let streamContainer = getStreamContainer();
     let link = getLink(user.login, user.display_name);
     let profileImage = getProfileImage(user.profile_image_url);
     let title = null;
@@ -159,21 +158,18 @@ function displayResults(users, streams, flags) {
     if (stream === OFFLINE && flags.offlineAreVisible) {
       title = getTitle(OFFLINE);
       target = offline;
-      streamContainer.appendChild(profileImage);
-      streamContainer.appendChild(link);
-      streamContainer.appendChild(title);
 
-          target.appendChild(streamContainer);
+      let streamContainer = fillStreamContainer(profileImage, link, title);
+      target.appendChild(streamContainer)
+
     } else if(stream !== OFFLINE && flags.onlineAreVisible){
       title = getTitle(stream.title);
+      title.classList.add('stream-title');
       target = online;
-      streamContainer.appendChild(profileImage);
-      streamContainer.appendChild(link);
-      streamContainer.appendChild(title);
 
-          target.appendChild(streamContainer);
+      let streamContainer = fillStreamContainer(profileImage, link, title);
+      target.appendChild(streamContainer)
     }
-
   }
 }
 
@@ -194,6 +190,27 @@ function clear() {
 function getStreamContainer() {
   let streamContainer = document.createElement('div');
   streamContainer.setAttribute('class', 'container');
+
+  return streamContainer;
+}
+
+function fillStreamContainer(profileImage, link, title) {
+  let streamContainer = getStreamContainer();
+
+  let profileImageContainer = document.createElement('span');
+  profileImageContainer.classList.add('inline-block');
+  profileImageContainer.appendChild(profileImage)
+  streamContainer.appendChild(profileImageContainer);
+
+  let linkContainer = document.createElement('span');
+  linkContainer.classList.add('inline-block', 'item-container', 'text-container', 'link-container');
+  linkContainer.appendChild(link)
+  streamContainer.appendChild(linkContainer);
+
+  let titleContainer = document.createElement('span');
+  titleContainer.classList.add('inline-block', 'item-container', 'text-container', 'title-container');
+  titleContainer.appendChild(title)
+  streamContainer.appendChild(titleContainer);
 
   return streamContainer;
 }
